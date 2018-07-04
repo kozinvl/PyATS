@@ -1,6 +1,7 @@
 import ats
 import os
 from ats.easypy import run
+import ats.easypy
 
 def main():
     '''
@@ -15,4 +16,3 @@ def main():
 
     # execute the testscript
     run(testscript=testscript)
-
