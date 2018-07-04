@@ -36,7 +36,7 @@ class Testcase_One(aetest.Testcase):
         assert self.b == 2
 
     @aetest.test
-    def test_two(self, section):
+    def test_failed(self, section):
         log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
         assert self.b == 23
 
