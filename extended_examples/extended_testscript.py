@@ -107,3 +107,5 @@ class ExampleTestcase(aetest.Testcase):
         logger.info('arg_B: %s' % arg_B)
         logger.info('local_A: %s' % local_A)
         logger.info('local_B: %s' % local_B)
+
+
