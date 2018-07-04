@@ -34,3 +34,14 @@ class Testcase_One(aetest.Testcase):
     def test_two(self, section):
         log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
         assert self.b == 2
+
+
+class common_cleanup(aetest.CommonCleanup):
+    @aetest.subsection
+    def clean_everything(self):
+        log.info('In Common Cleanup')
+        log.info('Finish')
+
+
+if __name__ == '__main__':
+    aetest.main()
