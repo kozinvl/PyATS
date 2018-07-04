@@ -29,6 +29,7 @@ class CommonSetup(aetest.CommonSetup):
 
     @aetest.subsection.loop(result=['passed', 'skipped'])
     def subsection_looped_parameters(self, result):
+        # equivalent to self.passed(), self.skipped()
         result_api = getattr(self, result)
         result_api()
 
@@ -107,3 +108,29 @@ class ExampleTestcase(aetest.Testcase):
         logger.info('arg_B: %s' % arg_B)
         logger.info('local_A: %s' % local_A)
         logger.info('local_B: %s' % local_B)
+
+    @aetest.test
+    def accessing_parameteres_with_other_methods(self, **kwargs):
+        assert self.parameters == kwargs
+        import pprint
+        logger.info(pprint.pformat(self.parameters))
+
+    @aetest.test.loop(index=range(4),
+                      result=['passed', 'failed', 'skipped', 'errored'])
+    def test_loop(self, index, result):
+        logger.info('Current index value: %s' % index)
+        result_api = getattr(self, result)
+        result_api()
+
+    @aetest.test
+    def exceptions_are_errors(self, non_existent_parameter):
+        pass
+
+    @aetest.test
+    def show_version(self, uut=None):
+        if uut:
+            uut.execute('Show version')
+
+    @aetest.cleanup
+    def cleanup(self):
+        self.parameters = {}
