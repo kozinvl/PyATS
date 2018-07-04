@@ -1,4 +1,4 @@
-
+import ats
 import os
 from ats.easypy import run
 
@@ -15,3 +15,4 @@ def main():
 
     # execute the testscript
     run(testscript=testscript)
+

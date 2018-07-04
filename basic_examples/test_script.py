@@ -35,6 +35,11 @@ class Testcase_One(aetest.Testcase):
         log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
         assert self.b == 2
 
+    @aetest.test
+    def test_two(self, section):
+        log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        assert self.b == 23
+
 
 class common_cleanup(aetest.CommonCleanup):
     @aetest.subsection
