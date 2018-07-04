@@ -24,6 +24,7 @@ class Testcase_One(aetest.Testcase):
         log.info("%s Setup/Preparation" % self.uid)
         self.a = 1
         self.b = 2
+        self.c = 3
 
     @aetest.test
     def test_one(self, section):
@@ -36,9 +37,34 @@ class Testcase_One(aetest.Testcase):
         assert self.b == 2
 
     @aetest.test
-    def test_failed(self, section):
+    def test_three(self, section):
+        log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        assert self.c == 3
+
+    @aetest.test
+    def test_assert(self, section):
         log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
         assert self.b == 23
+
+    @aetest.test
+    def test_skipped(self, section):
+        log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        self.skipped('this test was skipped')
+
+    @aetest.test
+    def test_blocked(self, section):
+        log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        self.blocked('this test was blocked')
+
+    @aetest.test
+    def test_errored(self, section):
+        log.warning("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        self.errored('this test was errored')
+
+    @aetest.test
+    def test_aborted(self, section):
+        log.info("Execute Test section: %s in testcase %s" % (section.uid, self.uid))
+        self.aborted('this test was aborted')
 
 
 class common_cleanup(aetest.CommonCleanup):
