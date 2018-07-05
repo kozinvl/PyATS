@@ -71,9 +71,10 @@ class CommonSetup(aetest.CommonSetup):
                     # store the device into parameters
                     testbed.devices['uut'].connect()
                     self.parent.parameters['uut'] = testbed.devices['uut']
+        logger.info(banner(self.random_local_method()))
 
     def random_local_method(self):
-        return "Ooooo, I got called!"
+        return "Ooooo, I got called in banner! Amazing"
 
 
 class ExampleTestcase(aetest.Testcase):
