@@ -2,6 +2,7 @@ import logging
 import argparse
 from ats import aetest
 from ats.log.utils import banner
+from extended_examples.libs import local_library
 
 logger = logging.getLogger(__name__)
 
@@ -143,7 +144,8 @@ class ExampleTestcase(aetest.Testcase):
     def cleanup(self):
         self.parameters = {}
 
-@aetest.loop(a = [2, 3])
+
+@aetest.loop(a=[2, 3])
 class LoopedTestcase(aetest.Testcase):
     # associate groups
     groups = ['group_A', 'group_B']
@@ -152,11 +154,9 @@ class LoopedTestcase(aetest.Testcase):
     def setup(self, a):
         logger.info(banner('Value A: %s' % a))
 
-    @aetest.test.loop(b = [4, 5])
+    @aetest.test.loop(b=[4, 5])
     def product(self, a, b):
-        logger.info('%s x %s = %s' % (a, b, a*b))
-
-
+        logger.info('%s x %s = %s' % (a, b, a * b))
 
 
 class TestcaseWithSteps(aetest.Testcase):
@@ -200,9 +200,9 @@ class TestcaseWithSteps(aetest.Testcase):
                                 pass
             with step.start('substep two') as substep:
                 pass
-        # with steps.start('test step two') as step:
-        #     # cal another function, pass in the step
-        #     local_library.function_supporting_step(step)
+        with steps.start('test step two') as step:
+            # cal another function from library, pass in the step
+            local_library.function_supporting_step(step)
 
 
 class CommonCleanup(aetest.CommonCleanup):
