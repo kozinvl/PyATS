@@ -1,40 +1,8 @@
-'''example_job.py
-
-This is the example job file for both comprehensive examples: the base_example
-script and variant_example script.
-
-In this jobfile, we'll demonstrate the purpose & configurability of job files,
-and as well demonstrate some AEtest features.
-
-Examples:
-    # to run under standalone execution
-    bash$ python base_example.py
-
-    # to run under easypy
-    bash$ easypy job/example_job.py
-
-References:
-   For the complete and up-to-date user guide on pyATS, visit:
-    https://developer.cisco.com/site/pyats/docs/
-'''
-
-#
-# optional author information
-#
-__author__ = 'Siming Yuan <siyuan@cisco.com>'
-__copyright__ = 'Copyright 2017, Cisco Systems'
-__email__ = 'pyats-support-ext@cisco.com'
-__date__ = 'Nov 14, 2017'
-
-#
-# import block
-#
 import os
 import logging
 import argparse
 
 from ats.easypy import run
-from ats.datastructures.logic import And, Or, Not
 
 loglevel = os.environ.get('loglevel', 'WARNING')
 groups = os.environ.get('execution_group', None)
