@@ -13,19 +13,19 @@ parameters = {'arg_A': 'value A',
 class CommonSetup(aetest.CommonSetup):
     @aetest.subsection
     def simple_subsection(self):
-        self.from_simple_subsection = 'this is simple'
+        self.from_simple_subsection = 'sample'
         self.passed('It Always passes!')
         logger.info('is not executed, because self.passed')
 
     @aetest.subsection
-    def using_parameters(self, testbed, arg_a, arg_b):
+    def using_parameters(self, testbed, arg_A, arg_B):
         logger.info('testbed: %s' % testbed)
-        logger.info('Parameter A: %s' % arg_a)
-        logger.info('Parameter B: %s' % arg_b)
+        logger.info('Parameter A: %s' % arg_A)
+        logger.info('Parameter B: %s' % arg_B)
 
     @aetest.subsection
     def self_is_self(self):
-        assert self.from_simple_subsection is 'this is simple'
+        assert self.from_simple_subsection is 'sample'
 
     @aetest.subsection.loop(result=['passed', 'skipped'])
     def subsection_looped_parameters(self, result):
@@ -76,8 +76,8 @@ class CommonSetup(aetest.CommonSetup):
 
 
 class ExampleTestcase(aetest.Testcase):
-    uid = 'ExampleTestcase'
-    description = 'An alternative description for this ExampleTestcase'
+    uid = 'SecondExampleTestcase'
+    description = 'An alternative description for ExampleTestcase #2'
     groups = ['group_A', 'group_B', 'group_C']
     parameters = {
         'local_A': 'default value A',
@@ -88,18 +88,22 @@ class ExampleTestcase(aetest.Testcase):
 
     @aetest.setup
     def setup(self):
-        logger.info("%s Setup/Preparation" % self.uid)
+        # assign some values to self
         self.word = True
+        # declare section passed
         self.passed('Setup pass')
 
-    @aetest.setup
-    def simple_test(self):
+    @aetest.test
+    def a_simple_test(self):
+        # let's do some testing
         assert self.word is True
+        # access attributes/data set within testcase definition
         logger.info('Testcase data_A: %s' % self.data_A)
-        logger.info('Testcase data_B: %s' % self.data_B)
 
-    @aetest.setup
-    def accessing_parameters(self, testbed, arg_A,
+    @aetest.test
+    def accessing_parameters(self,
+                             testbed,
+                             arg_A,
                              arg_B,
                              local_A,
                              local_B):
@@ -123,6 +127,10 @@ class ExampleTestcase(aetest.Testcase):
         result_api()
 
     @aetest.test
+    def assert_errors_are_failures(self):
+        assert 'Apple' > 'Google', "Apple > Google? Blasphemy! Preposterous!"
+
+    @aetest.test
     def exceptions_are_errors(self, non_existent_parameter):
         pass
 
@@ -134,3 +142,101 @@ class ExampleTestcase(aetest.Testcase):
     @aetest.cleanup
     def cleanup(self):
         self.parameters = {}
+
+
+class TestcaseWithSteps(aetest.Testcase):
+    groups = ['group_A', ]
+
+    @aetest.setup
+    def setup(self, steps):
+        with steps.start('this is a description of the step'):
+            pass
+        with steps.start('another step') as step:
+            step.passed()
+
+    @aetest.test
+    def step_continue_on_failure_and_assertions(self, steps):
+        # assertionErrors are also treated as failures
+        with steps.start('assertion errors -> Failed', continue_=True):
+            assert 1 == 0
+        with steps.start('allowed to continue executing') as step:
+            self.failed()
+        with steps.start('this will not be run'):
+            pass
+
+    @aetest.test
+    def steps_errors_exits_immediately(self, steps):
+        # assertionErrors are also treated as failures
+        with steps.start('exceptions causes all steps to skip over'):
+            blablabla_function_doesnt_exist()
+        with steps.start('another step that never runs'):
+            pass
+
+    @aetest.test
+    def steps_with_child_steps(self, steps):
+        with steps.start('test step one') as step:
+            # start more steps
+            with step.start('substep one') as sstep:
+                # there's no limit to step nesting
+                with sstep.start('subsubstep one') as sstep:
+                    with sstep.start('subsubsubstep one') as sstep:
+                        with sstep.start('running out of indentation') as sstep:
+                            with sstep.start('definitely gone too far...'):
+                                pass
+            with step.start('substep two') as substep:
+                pass
+        # with steps.start('test step two') as step:
+        #     # cal another function, pass in the step
+        #     local_library.function_supporting_step(step)
+
+
+class CommonCleanup(aetest.CommonCleanup):
+    @aetest.subsection
+    def example_cleanup_subsection(self):
+        pass
+
+    @aetest.subsection
+    def results_default_to_passed(self):
+        '''Results Default to Passed
+        The following assertion statement is True, so no error will be raised.
+        This section will finish running and automatically receive Passed.
+        Manually giving results is so old school ...pffft...
+        '''
+
+        # no exception here, and therefore the result for this subsection
+        # is a definite Passed
+        assert 'Google' > 'Apple', ':) no explanation necessary'
+
+    @aetest.subsection
+    def assertion_error_is_failed(self):
+        '''Exception Driven Behavior (Failed)
+
+        In this example, we'll raise an exception to make this section fail.
+        '''
+
+        # this will cause an AssertionException
+        assert 'I' > "We", 'teamwork is always stronger'
+
+    @aetest.subsection
+    def exception_driven_behavior_error(self):
+        '''Exception Driven Behavior (Errored)
+
+        In this example, we'll cause a python error.
+        '''
+
+        # call something that doesn't exist will certainly wreak havoc
+        i_am_a_proc_that_does_not_exist('arguments for the win')
+
+
+if __name__ == '__main__':
+    import argparse
+    from ats import topology
+
+    parser = argparse.ArgumentParser(description="standalone parser")
+    parser.add_argument('--testbed', dest='testbed',
+                        help='testbed YAML file',
+                        type=topology.loader.load,
+                        default=None)
+
+    args = parser.parse_known_args()[0]
+    aetest.main(testbed=args.testbed)
