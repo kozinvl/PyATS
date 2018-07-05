@@ -143,6 +143,21 @@ class ExampleTestcase(aetest.Testcase):
     def cleanup(self):
         self.parameters = {}
 
+@aetest.loop(a = [2, 3])
+class LoopedTestcase(aetest.Testcase):
+    # associate groups
+    groups = ['group_A', 'group_B']
+
+    @aetest.setup
+    def setup(self, a):
+        logger.info(banner('Value A: %s' % a))
+
+    @aetest.test.loop(b = [4, 5])
+    def product(self, a, b):
+        logger.info('%s x %s = %s' % (a, b, a*b))
+
+
+
 
 class TestcaseWithSteps(aetest.Testcase):
     groups = ['group_A', ]
@@ -197,33 +212,17 @@ class CommonCleanup(aetest.CommonCleanup):
 
     @aetest.subsection
     def results_default_to_passed(self):
-        '''Results Default to Passed
-        The following assertion statement is True, so no error will be raised.
-        This section will finish running and automatically receive Passed.
-        Manually giving results is so old school ...pffft...
-        '''
-
         # no exception here, and therefore the result for this subsection
         # is a definite Passed
         assert 'Google' > 'Apple', ':) no explanation necessary'
 
     @aetest.subsection
     def assertion_error_is_failed(self):
-        '''Exception Driven Behavior (Failed)
-
-        In this example, we'll raise an exception to make this section fail.
-        '''
-
         # this will cause an AssertionException
         assert 'I' > "We", 'teamwork is always stronger'
 
     @aetest.subsection
     def exception_driven_behavior_error(self):
-        '''Exception Driven Behavior (Errored)
-
-        In this example, we'll cause a python error.
-        '''
-
         # call something that doesn't exist will certainly wreak havoc
         i_am_a_proc_that_does_not_exist('arguments for the win')
 
@@ -231,6 +230,9 @@ class CommonCleanup(aetest.CommonCleanup):
 if __name__ == '__main__':
     import argparse
     from ats import topology
+
+    logging.root.setLevel('INFO')
+    logging.root.setLevel('INFO')
 
     parser = argparse.ArgumentParser(description="standalone parser")
     parser.add_argument('--testbed', dest='testbed',
