@@ -2,7 +2,7 @@ import logging
 import argparse
 from ats import aetest
 from ats.log.utils import banner
-from extended_examples.libs import local_library
+from libs import local_library
 
 logger = logging.getLogger(__name__)
 
