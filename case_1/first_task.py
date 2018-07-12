@@ -1,8 +1,11 @@
+"""Example of pyATS work. Used just AETest package"""
+
 import logging
 from ats import aetest
 from ats.topology import loader
 
 log = logging.getLogger(__name__)
+log.info('Loading testbed from YAML file')
 testbed = loader.load("testbed_1.yaml")
 
 
@@ -11,13 +14,13 @@ class Testcase_One(aetest.Testcase):
 
     @aetest.setup
     def setup(self):
-        log.info('Loading testbed from YAML file')
         log.info('Connection to Linux Server')
         self.server = testbed.devices['vm-a']
         self.server.connect()
 
     @aetest.test
     def test_one(self):
+        log.info('Check the results')
         a = self.server.execute('hostname')
         assert len(a) > 3
 
