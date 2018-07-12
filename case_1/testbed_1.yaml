@@ -12,17 +12,18 @@
 #        ip: 192.168.242.44
 #    type: 'linux'
 #
-mohamoha-ads:
-    os: 'linux'
-    tacacs:
-        username: mshumakov
-    passwords:
-        linux: mykola00
-    connections:
-      defaults:
-        class: 'unicon.Unicon'
-      linux:
-        protocol: ssh
-        ip: 192.168.242.44
-        port: 2200
-    type: 'linux'
+devices:
+    mohamoha-ads:
+        os: 'linux'
+        tacacs:
+            username: mshumakov
+        passwords:
+            linux: mykola00
+        connections:
+          defaults:
+            class: 'unicon.Unicon'
+          linux:
+            protocol: ssh
+            ip: 192.168.242.44
+            port: 2200
+        type: 'linux'
