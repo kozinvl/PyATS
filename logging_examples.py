@@ -21,7 +21,7 @@ logger.critical('A critical message')
 logger.error(banner('an error message\nwith newline'))
 time.sleep(1)
 
-msg = banner('Something Done Wrong', v_margin='!', h_margin='&')
+msg = banner('Something Done Wrong', v_margin='~', h_margin='~')
 print(msg)
 
 msg = banner('a banner message')
