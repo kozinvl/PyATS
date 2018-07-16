@@ -10,7 +10,7 @@ def main():
     """
 
     script_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    testscript = os.path.join(script_path, 'first_task.py')
+    testscript = os.path.join(script_path, 'first_example.py')
 
     # execute the testscript
     run(testscript=testscript)

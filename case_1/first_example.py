@@ -1,4 +1,4 @@
-"""Example of pyATS work. Used just AETest package"""
+"""Example of pyATS work. Used just AETest package and data in the form"""
 
 import logging
 from ats import aetest
@@ -9,7 +9,7 @@ log.info('Loading testbed from YAML file')
 testbed = loader.load("testbed_1.yaml")
 
 
-class Testcase_One(aetest.Testcase):
+class TestcaseOne(aetest.Testcase):
     server = None
 
     @aetest.setup
