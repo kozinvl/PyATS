@@ -21,8 +21,8 @@ class TestcaseOne(aetest.Testcase):
     @aetest.test
     def test_one(self):
         log.info('Check the results')
-        a = self.server.execute('hostname')
-        assert len(a) > 3
+        virtual_machine_name = self.server.execute('hostname')
+        assert len(virtual_machine_name) > 3
 
     @aetest.cleanup
     def cleanup(self):
