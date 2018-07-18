@@ -1,5 +1,5 @@
-##Install:
-
+Install:
+======
 *pyATS currently supports `Python v3.4.x, v3.5.x, and v3.6.x,` and is tested to work on the following platforms:*
 
 •	Linux (tested with CentOS, RHEL, Ubuntu)
@@ -8,7 +8,8 @@
 
 ```pip install pyats```
 
-##How to Run with AETest, EasyPy:
+How to Run with AETest, EasyPy:
+======
 
 *AETest*
 
@@ -18,7 +19,8 @@
 
 ```bash$ easypy test_job.py -testbed_file /path/to/my/testbed.yaml```
 
-##Links:
+Links:
+======
 
 [Fast overview](https://pubhub.devnetcloud.com/media/pyats/docs/getting_started/index.html)
 
