@@ -1,4 +1,5 @@
-##Task 1
+Task 1
+======
 
 - Create testbed using next parameters:
   - Single device named `“vm-server”` with `“mac or linux”` OS
@@ -6,7 +7,8 @@
   - Use `“loader”` module to load created testbed
 - Using only AEtest - check in testcase that the testbed contains device `“vm-server”`
 
-##Task 2
+Task 2
+======
 
 - Use testbed from task 1 and add information about login/password remote device
 - Use `SSH` protocol
@@ -15,5 +17,6 @@
   - In Test section use command `“whoami”` on device
 -	Check that output equal login from testbed
 
-##Task 3
+Task 3
+======
 - Create job file and run with CLI (Easypy)
