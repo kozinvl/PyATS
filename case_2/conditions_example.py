@@ -7,15 +7,14 @@ parameters = {'data_1': 1, 'data_2': 2}
 
 
 class CommonSetup(aetest.CommonSetup):
-    data_A = 'string'
     data_B = 5
-    parameters = {'default_key': 'default_value'}
+    parameters = {}
 
     @aetest.subsection
     def common_setup(self):
         logger.info('Running current section: %s' % self.uid)
         self.data_C = 6
-        self.passed('Test was passed')
+        self.passed('Marking that test always pass')
 
     @aetest.loop(uid=['subsection_2', 'subsection_3'])
     @aetest.subsection
@@ -30,7 +29,7 @@ class CommonSetup(aetest.CommonSetup):
 
     @aetest.subsection
     def verify(self):
-        logger.info('verifying variable')
+        logger.info('Verifying variable')
         assert self.data_B == 5
 
     @aetest.subsection
@@ -38,7 +37,6 @@ class CommonSetup(aetest.CommonSetup):
         logger.info('new_key : %s' % new_key)
         logger.info('data_1 : %s' % data_1)
         logger.info('data_C: %s' % self.data_C)
-        self.passed('Marking that test always pass')
 
     @aetest.subsection
     def skip_test(self):
@@ -75,15 +73,4 @@ class CommonCleanup(aetest.CommonCleanup):
 
 
 if __name__ == '__main__':
-    import argparse
-    from ats import topology
-
-    logging.root.setLevel('INFO')
-    parser = argparse.ArgumentParser(description="standalone parser")
-    parser.add_argument('--testbed', dest='testbed',
-                        help='testbed YAML file',
-                        type=topology.loader.load,
-                        default=None)
-
-    args = parser.parse_known_args()[0]
-    aetest.main(testbed=args.testbed)
+    aetest.main()
