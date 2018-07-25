@@ -3,60 +3,75 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-parameters = {'data_1': '1', 'data_2': '2'}
+parameters = {'data_1': 1, 'data_2': 2}
 
 
 class CommonSetup(aetest.CommonSetup):
     data_A = 'string'
     data_B = 5
-    parameters = {'default_key': 'default'}
+    parameters = {'default_key': 'default_value'}
 
     @aetest.subsection
     def common_setup(self):
-        logger.info('Current section: %s' % self.uid)
-        assert self.data_A == 'string'
+        logger.info('Running current section: %s' % self.uid)
+        self.data_C = 6
+        self.passed('Test was passed')
 
-    @aetest.loop(variable=['subsection_2', 'subsection_3'])
+    @aetest.loop(uid=['subsection_2', 'subsection_3'])
     @aetest.subsection
-    def common_next(self, variable):
-        logger.info("Current : %s" % variable)
-        if variable == 'subsection_2':
-            self.var = 5
-            self.parameters = {'new_key': self.var}
-            logger.info('%s Was added  in parameters dict ' % self.var)
+    def looped(self, uid):
+        logger.info("Current section: %s" % uid)
+        if uid == 'subsection_2':
+            self.parameters = {'new_key': 11}
+            logger.info('%s Was added in parameters' % self.parameters['new_key'])
         else:
-            self.parameters.update({'other_key': 6})
-            logger.info('value was added')
+            self.parameters.update({'other_key': 12})
+            logger.info('%s Was added in parameters' % self.parameters['other_key'])
 
     @aetest.subsection
-    def common_last(self):
-        logger.info('Parameters number: %s' % self.parameters['new_key'])
-        logger.info(parameters)
-        logger.info(self.parameters)
+    def verify(self):
+        logger.info('verifying variable')
+        assert self.data_B == 5
+
+    @aetest.subsection
+    def using_values(self, new_key, data_1):
+        logger.info('new_key : %s' % new_key)
+        logger.info('data_1 : %s' % data_1)
+        logger.info('data_C: %s' % self.data_C)
+        self.passed('Marking that test always pass')
+
+    @aetest.subsection
+    def skip_test(self):
+        self.skipped('Test was skipped')
+        logger.info('It will not printed on the console because of skipped!')
 
 
-class MainCase(aetest.Testcase):
-    parameters = {'xyz': '123'}
+class TestCase(aetest.Testcase):
+    parameters = {'abc': 123}
 
     @aetest.setup
     def setup(self):
-        logger.info('Setup from Case')
+        logger.info('Setup from TestCase')
 
     @aetest.test
     def test(self):
         logger.info('Test section')
-        logger.info(self.parameters)
-        assert self.parameters['xyz'] == '123'
+        assert self.parameters['abc'] == 123
 
     @aetest.cleanup
     def cleanup(self):
-        logger.info('Cleanup all data from Case')
+        logger.info('Cleanup all data from test_case')
+        self.parameters = {}
 
 
 class CommonCleanup(aetest.CommonCleanup):
     @aetest.subsection
-    def clean(self):
+    def cleanup(self):
         logger.info('Common Cleanup')
+
+    @aetest.subsection
+    def cleanup_second(self):
+        logger.info('Done')
 
 
 if __name__ == '__main__':
