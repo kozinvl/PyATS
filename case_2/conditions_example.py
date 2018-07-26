@@ -39,8 +39,8 @@ class CommonSetup(aetest.CommonSetup):
         logger.info('data_C: %s' % self.data_C)
 
     @aetest.subsection
-    def skip_test(self):
-        self.skipped('Test was skipped')
+    def skip_this(self):
+        self.skipped('This section was skipped')
         logger.info('It will not printed on the console because of skipped!')
 
 
