@@ -1,20 +1,14 @@
 devices:
-    virtual_device:
+    remote_device:
         os: 'linux'
-        tacacs:
-            username: vkozin
-        passwords:
-            linux: '159753852'
         connections:
           linux:
-            protocol: ssh
-            ip: 192.168.242.44
+            ip: 10.129.201.49
         type: 'linux'
 
 testbed:
   servers:
     server_alias:
-      server: myserver.domain.com
-      address: 1.1.1.1
-      username: my_username
-      password: my_password
+      server: remote_server
+      address: 192.168.242.44
+
