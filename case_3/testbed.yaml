@@ -1,5 +1,5 @@
 devices:
-    remote_device:
+    my_device:
         os: 'linux'
         connections:
           linux:
@@ -8,7 +8,7 @@ devices:
 
 testbed:
   servers:
-    server_alias:
+    <name>:
       server: remote_server
       address: 192.168.242.44
 
