@@ -1,9 +1,9 @@
-from ats import aetest
 from ats.topology import loader
+from ats import topology
 from ats.utils.fileutils import FileUtils
-from genie.libs import filetransferutils
 
 # Transferring a single file to or from a remote server
+
 
 tb = loader.load("testbed.yaml")
 
@@ -20,3 +20,28 @@ this_device.copyfile(source='scp://remote_server:/tmp/demo.txt',
 this_device.copyfile(source='/Users/vkozin/Downloads/Task_1.docx',
                      destination='scp://remote_server:/tmp/',
                      timeout_seconds=15)
+
+# loading testbed immediately
+tb = topology.loader.load('''
+devices:
+    remote_device:
+        os: 'linux'
+        tacacs:
+            username: vkozin
+        passwords:
+            linux: '159753852'
+        connections:
+          linux:
+            protocol: ssh
+            ip: 192.168.242.44
+        type: 'linux'
+''')
+
+# input data in remote file
+string_configuration = 'data for script'
+
+device = tb.devices['remote_device']
+
+device.connect()
+device.execute('cd /tmp')
+device.execute("echo '{}' > demo.txt".format(string_configuration))
