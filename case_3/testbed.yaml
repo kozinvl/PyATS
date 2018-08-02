@@ -1,0 +1,14 @@
+devices:
+    my_device:
+        os: 'linux'
+        connections:
+          linux:
+            ip: 10.129.201.49
+        type: 'linux'
+
+testbed:
+  servers:
+    <name>:
+      server: remote_server
+      address: 192.168.242.44
+
