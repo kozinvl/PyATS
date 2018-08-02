@@ -27,10 +27,6 @@ class TestCase(aetest.Testcase):
         print(self.parameters)
         print(a)
 
-    @aetest.test
-    def test_1(self):
-        pass
-
 
 new_dict = {'param_G': 'new_value', 'digit': random.random}
 # update static dict
