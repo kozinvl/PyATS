@@ -1,5 +1,5 @@
-"""Example of pyATS work. Used AETest package and Easypy module.
-To run job file write in terminal 'easypy easypy_small_example_job.py'"""
+"""Example of pyATS work. Used AETest package and
+To run job file write in terminal 'easypy multiprocess_example_job.py'"""
 import os
 from ats.easypy import run
 
@@ -8,7 +8,7 @@ from ats.easypy import run
 def main():
     # definition of the path to test script
     script_path = os.path.dirname(os.path.abspath(__file__))
-    testscript = os.path.join(script_path, 'first_example.py')
+    testscript = os.path.join(script_path, 'multiprocess_example.py')
 
     # execute the testscript
     run(testscript=testscript)
