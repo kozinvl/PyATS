@@ -52,9 +52,16 @@ class TestCase(aetest.Testcase):
         logger.info('Setup from TestCase')
 
     @aetest.test
-    def test(self):
+    def test(self, param_b, digit):
         logger.info('Test section')
+        logger.info(param_b)
+        logger.info(digit)
         assert self.parameters['abc'] == 123
+
+    @aetest.test
+    def test_2(self, foo, param_a):
+        logger.info(foo)
+        logger.info(param_a)
 
     @aetest.cleanup
     def cleanup(self):
@@ -73,4 +80,19 @@ class CommonCleanup(aetest.CommonCleanup):
 
 
 if __name__ == '__main__':
-    aetest.main()
+    import sys
+    import argparse
+
+    logging.root.setLevel('INFO')
+    parser = argparse.ArgumentParser(description="example_parser")
+
+    parser.add_argument('--digit', dest='digit')
+
+    args, sys.argv[1:] = parser.parse_known_args(sys.argv[1:])
+
+    digit = int(args.digit)
+
+    # pass all arguments to aetest.main() as kwargs
+    aetest.main(datafile='data_file.yaml', foo=500, digit=digit)
+
+    # Run under standalone execution ! ---> python conditions_example.py --digit 100

@@ -1,0 +1,3 @@
+parameters:
+  param_a: 'Special string from datafile'
+  param_b: 'Not special string from datafile'
