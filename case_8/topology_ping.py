@@ -30,7 +30,7 @@ device.connect()
 output = device.execute('hostname')
 device.ping(test_ip)
 
-assert output in testbed.devices
+assert output in testbed
 
 # disconnect from device
 device.disconnect()
