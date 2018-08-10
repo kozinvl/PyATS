@@ -1,0 +1,28 @@
+testbed:
+  servers:
+    <name>:
+      server: remote_server
+      address: 192.168.242.44
+devices:
+    mac_1:
+        connections:
+          info:
+            ip: 10.129.201.49 #cable    wi-fi 10.131.169.241
+        type: 'linux'
+    mac_2:
+        connections:
+          info:
+            ip: 10.129.201.101 #cable    wi-fi 10.131.169.122
+        type: 'linux'
+topology:
+  mac_1:
+    interfaces:
+      Ethernet1/1:
+        link: link-1
+        type: ethernet
+  mac_2:
+    interfaces:
+      Ethernet1/2:
+        link: link-1
+        type: ethernet
+

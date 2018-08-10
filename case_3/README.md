@@ -1,3 +1,8 @@
+Install:
+======
+```pip install scp``` in order to use scp protocol
+
+
 Links:
 ======
 
