@@ -7,7 +7,7 @@ How to Run with AETest, EasyPy:
 
 *To Run with EasyPy you need to run job file*
 
-```bash$ easypy easypy multiprocess_easypy.py```
+```bash$ easypy multiprocess_example_job.py```
 
 Links:
 ======
