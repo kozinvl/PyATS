@@ -7,13 +7,16 @@ import logging
 #       logging.ERROR
 #       logging.WARNING
 #       logging.DEBUG
+
 # create a logger for this module
 logger = logging.getLogger(__name__)
 
 logger.setLevel(logging.INFO)
 
 
-class TestcaseOne(aetest.Testcase):
+# Typical Usage
+class TypicalLoggerCase(aetest.Testcase):
+
     @aetest.setup
     def setup(self):
         # informational messages
@@ -25,7 +28,6 @@ class TestcaseOne(aetest.Testcase):
     def test_one(self):
         # debug messages
         logger.debug('debug messages')
-
         # warning messages
         logger.warning('warning messages')
 
@@ -36,4 +38,9 @@ class TestcaseOne(aetest.Testcase):
 
 
 if __name__ == '__main__':
+    from ats.log.utils import banner
+
+    msg = banner('Pre Setup in main function', v_margin='x', h_margin='-')
+    print(msg)
+    logger.info(banner('Steps\nwas finished'))
     aetest.main()
