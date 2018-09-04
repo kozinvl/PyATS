@@ -11,6 +11,7 @@ import logging
 # create a logger for this module
 logger = logging.getLogger(__name__)
 
+# set logging level a bit lower to enable INFO
 logger.setLevel(logging.INFO)
 
 
@@ -25,7 +26,7 @@ class TypicalLoggerCase(aetest.Testcase):
         logger.critical('critical messages')
 
     @aetest.test
-    def test_one(self):
+    def test(self):
         # debug messages
         logger.debug('debug messages')
         # warning messages
